@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Family Tree Creator</h1>
+<div id="container">
+<div id="newnode">
++
+</div>
+</div>
+</body>
+
+<style>
+
+div {
+border-radius:1em;
+}
+
+body {
+background-color:#522054;
+color: white;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+#container {background-color: white;height: 77vh;width: 90%;position: relative;padding: 1em;flex-direction: column;display: flex;}
+
+#newnode {background-color: #522054E0;height: 90px;width: 90px;align-self: center;margin-top: auto;o;font-size:7rem;text-align:center;justify-content: center;display: flex;align-items: center;font-weight: bold;color: #FFFFFFBB;}
+
+#newnode:hover {
+background-color: #522054ff;
+cursor:pointer;
+color:white;
+}
+
+#editperson {display: flex;
+    background-color: #7e1d4a;
+    height: 60vh;
+    flex-direction: column;
+    text-align: start;
+    padding: 1em;
+    align-self: center;
+    position: fixed;
+    width: 30%;
+    border: solid white 4px;}
+
+input {
+    max-width: 80%;
+}
+
+#overlay {
+position: fixed;
+height: 110%;
+width:110%;
+display:flex;
+align-items:center;
+justify-content: center;
+background-color:#000000C0;
+border-radius:0px;
+top: 0px;
+}
+
+</style>
+
+<script>
+class Person {
+constructor(fname = "Person",lname="",age="") {
+this.firstname = fname;
+this.lastname = lname;
+this.age = age;
+this.attrs = {};
+this.relations = {};
+}
+
+setName(name) {
+this.firstname = name;
+}
+
+setTrait(trait, value) {
+this.attrs[trait] = value;
+}
+
+addRelation(othName,relType) {
+this.relations[othName] = relType;
+}
+
+}
+
+let personlist = [];
+
+document.querySelector("#newnode").addEventListener("click", function() {
+let ol = document.createElement("div");
+ol.id = "overlay";
+let form = document.createElement("div");
+form.innerHTML = `
+<label for='editname'>First Name</label>
+<input name='editname' id='editname' required>
+<label for='editsurn'>Last Name</label>
+<input name='editsurn' id='editsurn'>
+<label for='editage'>Age</label>
+<input name='editage' id='editage'>
+<button id='createperson'>Submit</button>
+`;
+document.querySelector("body").appendChild(ol);
+ol.appendChild(form);
+document.querySelector("#createperson").addEventListener("click", function() {
+let fname = document.querySelector("#editname").value || "Person";
+let lname = document.querySelector("#editsurn").value || "";
+let mage = document.querySelector("#editage").value || "";
+personlist.push(new Person(fname,lname,mage));
+console.log(personlist);
+ol.remove();
+});
+
+ol.appendChild(form);
+form.id = "editperson";
+
+ol.addEventListener("click",event=> {
+if (event.target !== event.currentTarget) return;
+ol.remove();
+
+});
+
+});
+
+</script>
+
+</html>
+
